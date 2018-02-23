@@ -1,5 +1,7 @@
 """
-A simple wrapper for linear regression.  (c) 2018 Talant Ruzmetov
+Talant Ruzmetov, 2018
+A simple wrapper for Expectation Maximization with Gaussian Mixture implementation
+for diagonal(or circular) covariance. 
 """
 
 import numpy as np
