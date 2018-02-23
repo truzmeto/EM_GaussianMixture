@@ -1,3 +1,7 @@
+"""
+A simple wrapper for linear regression.  (c) 2018 Talant Ruzmetov
+"""
+
 import numpy as np
 from scipy.spatial.distance import cdist
 
