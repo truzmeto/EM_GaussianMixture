@@ -89,22 +89,3 @@ def train_EM(x_inp, n_centroids, n_steps):
         
     labels = x_expect.argmax(axis=1) # very elegant way of labeling!
     return means, labels
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
