@@ -16,7 +16,7 @@ def knn_main(train, test, labels, k = 1):
     Input:   train - numpy ndarray of dimension (n_train_samples, n_features)
              test  - numpy ndarray of dimension (n_test_samples, n_features)
              
-             k - number of nearest neighbours
+             k - number of nearest neighbours(k=1 by default)
              labels - given trainig data labels, np array (size = n_train_labels)
    
     Output:  pred_labels - np array(size = n_train_labels  or n_test_labels) 
@@ -42,10 +42,9 @@ def knn_main(train, test, labels, k = 1):
     return np.array(pred_labels)     
 
 
-def cross_val(data, labels, p = 0.4, kmax = 15):
+def cross_val(data, labels, n_bags = 5, kmax = 15, seed = 1):
     '''
     Cross validate using elbow method to find optimum k.
-    
     -----------
     
     Input:   data   - numpy ndarray of dimension (n_samples, n_features)
@@ -54,24 +53,38 @@ def cross_val(data, labels, p = 0.4, kmax = 15):
              seed   - random seed, integer value
     Output:  k_opt  - opt value for k(scalar)
     '''
-    
-    test = data[0:int(p*len(data))]        #cv chunk, sample randomly! 
-    cv_labels = labels[0:int(p*len(data))] #labels for sampled chunk!
-    
-    accuracy = []
-    for i in range(1,kmax):
-        pred_labels = knn_main(train = data, test = test, labels = labels, k = i)
-        accuracy.append(getAccuracy(labels = cv_labels, pred_labels=pred_labels))
+    size = len(data)
+    acc_mat = np.empty(shape = [kmax, n_bags])
+    for i in range(n_bags):
+        resample_index = np.random.choice( size, size//2, replace = False)
+        cv_set = data[resample_index,:]          
+        cv_labs = labels[resample_index]
+        #test = data[0:int(p*len(data))]        #cv chunk, sample randomly! 
+        #cv_labels = labels[0:int(p*len(data))] #labels for sampled chunk!
+        accuracy = []
+        for i in range(1, kmax):
+            pred_labs = knn_main(train = data, test = cv_set, labels = labels, k = i)
+            accuracy.append(getAccuracy(labels = cv_labs, pred_labels = pred_labs))
 
-    accuracy = np.array(accuracy)
-    opt_indx = np.argmax(accuracy)
-    k_opt = opt_indx
-    return k_opt, accuracy 
+        #append each accur. array as column into np2D array    
+        acc_mat[:,i] = np.array(accuracy)
+
+        #get mean accura. over all bags
+        mean_acc = np.mean(acc_mat, axis=1)
+
+        #get index(k-val) that gives max accuracy
+        opt_indx = np.argmax(mean_acc)
+        k_opt = opt_indx
+    return k_opt, mean_acc 
 
 
 #implement confu_mat calculation, accur, F1 also!    
 def getAccuracy(labels, pred_labels):
-    """ Calc Acc given labels and pred_labels """
+    """
+    Calc Acc given labels and pred_labels
+    ---------------
+    """
+    
     correct = 0
     for i in range(len(labels)):
         if labels[i] == pred_labels[i]:
@@ -79,8 +92,8 @@ def getAccuracy(labels, pred_labels):
     return (correct/float(len(labels))) * 100.0
 
 
-def test(train, test, k_opt = 1):
-    '''
+def testing(train, test, labels, k_opt = 1):
+    """
     Performs knn on testing set given opt k value.   
     
     -----------
@@ -89,12 +102,14 @@ def test(train, test, k_opt = 1):
              k_opt        - optimum value for # of neirest neighbours    
 
     Output:  labels  - numpy ndarray of dimension (n_samples)
-    '''
+    """
     
     pred_labels = knn_main(train = train, test = test, labels = labels, k = k_opt)
-    accuracy.append(getAccuracy(labels, pred_labels))
-    accuracy = np.array(accuracy)
-
-    return accuracy 
+    return pred_labels 
     
-
+def FinaleMsg(n = 15, m = 50):
+          """ Nicly decorated finale msg printing
+          ---------------
+          """
+          pattern = [('.|.'*(2*i + 1)).center(m, '-') for i in range(n//2)]
+          return '\n'.join(pattern + ['WELL DONE'.center(m, '-')] + pattern[::-1])
