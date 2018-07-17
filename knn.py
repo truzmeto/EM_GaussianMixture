@@ -55,15 +55,16 @@ def cross_val(data, labels, n_bags = 5, kmax = 15, seed = 1):
     '''
     size = len(data)
     acc_mat = np.empty(shape = [kmax, n_bags])
+
     for i in range(n_bags):
+
         resample_index = np.random.choice( size, size//2, replace = False)
         cv_set = data[resample_index,:]          
         cv_labs = labels[resample_index]
-        #test = data[0:int(p*len(data))]        #cv chunk, sample randomly! 
-        #cv_labels = labels[0:int(p*len(data))] #labels for sampled chunk!
         accuracy = []
-        for i in range(1, kmax):
-            pred_labs = knn_main(train = data, test = cv_set, labels = labels, k = i)
+
+        for j in range(1,kmax+1):
+            pred_labs = knn_main(train = data, test = cv_set, labels = labels, k = j)
             accuracy.append(getAccuracy(labels = cv_labs, pred_labels = pred_labs))
 
         #append each accur. array as column into np2D array    
@@ -74,7 +75,7 @@ def cross_val(data, labels, n_bags = 5, kmax = 15, seed = 1):
 
         #get index(k-val) that gives max accuracy
         opt_indx = np.argmax(mean_acc)
-        k_opt = opt_indx
+        k_opt = opt_indx + 1
     return k_opt, mean_acc 
 
 
