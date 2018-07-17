@@ -1,8 +1,12 @@
-## Expectation Maximization via Gaussian Mixture
+## My implementation of so Ml algorithms
 
-This code represents Expectation Maximization with Gaussian Mixture in order to
-performe clustering the data set with unknown labels. It is developed with python3. Currently, 
-it only supports diagonal covariance meaniang std length is same along different feature directions. 
+This repository contains some of ML algorithmsi implemented with python3 out of curiosity.
 
+** Currently it has:
+
+1. Expectation Maximization with Gaussian Mixture that performes clustering on data set with unknown labels.
+   It only supports diagonal covariance meaniang std length is same along different feature directions. 
+
+2. K-neirest neighbour including cross validation
 
 
