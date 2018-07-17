@@ -1,12 +1,14 @@
 ## My implementation of some ML algorithms
 
-### This repository contains some of ML algorithmsi implemented with python3 out of curiosity.
+### This repository contains some of ML algorithms implemented with powerful numpy library under
+python3.
 
 Currently it has:
 
-1. Expectation Maximization with Gaussian Mixture that performes clustering on data set with unknown labels.
+1. Expectation Maximization with Gaussian Mixture that performs clustering on data set with unknown labels.
    It only supports diagonal covariance meaniang std length is same along different feature directions. 
 
-2. K-neirest neighbour including cross validation
+2. K-neirest neighbour classification algorithm including cross validation with bagging. Bagging is
+   performed by resampling 50% with replacement, where n_bags can be passed as argument.  
 
 
