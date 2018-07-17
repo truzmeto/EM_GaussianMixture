@@ -1,4 +1,4 @@
-## My implementation of so ML algorithms
+## My implementation of some ML algorithms
 
 ### This repository contains some of ML algorithmsi implemented with python3 out of curiosity.
 
