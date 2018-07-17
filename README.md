@@ -1,4 +1,4 @@
-## My implementation of some ML algorithms
+## My ML & DS toolbox
 
 ### This repository contains some of ML algorithms implemented with powerful numpy library under Python3.
 
