@@ -1,8 +1,8 @@
-## My implementation of so Ml algorithms
+## My implementation of so ML algorithms
 
-This repository contains some of ML algorithmsi implemented with python3 out of curiosity.
+### This repository contains some of ML algorithmsi implemented with python3 out of curiosity.
 
-** Currently it has:
+Currently it has:
 
 1. Expectation Maximization with Gaussian Mixture that performes clustering on data set with unknown labels.
    It only supports diagonal covariance meaniang std length is same along different feature directions. 
