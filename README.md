@@ -1,9 +1,8 @@
 ## My implementation of some ML algorithms
 
-### This repository contains some of ML algorithms implemented with powerful numpy library under
-python3.
+### This repository contains some of ML algorithms implemented with powerful numpy library under Python3.
 
-Currently it has:
+Currently it only has:
 
 1. Expectation Maximization with Gaussian Mixture that performs clustering on data set with unknown labels.
    It only supports diagonal covariance meaniang std length is same along different feature directions. 
