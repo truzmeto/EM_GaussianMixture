@@ -10,4 +10,11 @@ Currently it only has:
 2. K-neirest neighbour classification algorithm including cross validation with bagging. Bagging is
    performed by resampling 50% with replacement, where n_bags can be passed as argument.  
 
+3. Decision Tree Regression
+
+4. Random Tree Regression
+
+5. Random Forest ( Random Tree combined with Bagging)
+
+6. Linear Regression
 
