@@ -100,12 +100,13 @@ def getAccuracy(labels, pred_labels, method = "class"):
     """
 
     n = len(labels)
-    #-------- check, debug
+    #-------- check point
     if n != len(pred_labels):
         print("Two vectors must have equal size!")
         
     
     correct = 0.0
+    norm = 0
     if method == "class":  #just count correct cases 
         for i in range(n):
             if labels[i] == pred_labels[i]:
@@ -114,10 +115,10 @@ def getAccuracy(labels, pred_labels, method = "class"):
         
     elif method == "reg": #return root mean squared error
         ave = np.mean(labels)
-        norm = 0
         for i in range(n):
             correct = correct + (labels[i] - pred_labels[i])*(labels[i] - pred_labels[i])
             norm = norm + (labels[i] - ave)*(labels[i] - ave)
+
         correct = np.sqrt(correct/n)    
         norm = np.sqrt(norm/n)
     accuracy = correct / norm    
