@@ -89,7 +89,7 @@ def getAccuracy(labels, pred_labels, method = "class"):
     """
     Calc Acc given labels and pred_labels
     when method = "class"  - it returns # of correctly predicted labels, normalized to 1 
-    when method = "reg"    - it returns 1 - RMSE / RMSD
+    when method = "reg"    - it returns 1 - sum((y-y_hat)^2) / sum((y-y_mean)^2)
     ---------------
     
     input:   labels       - actual known labels(values in case of regression)
