@@ -64,7 +64,7 @@ def cross_val(data, labels, method = "class", n_bags = 5, kmax = 15, seed = 1):
     for i in range(n_bags):
 
         resample_index = np.random.choice( size, size//2, replace = False)
-        cv_set = data[resample_index,:]          
+        cv_set = data[resample_index]   # data[resample_index,:]          
         cv_labs = labels[resample_index]
         accuracy = []
 
@@ -85,11 +85,11 @@ def cross_val(data, labels, method = "class", n_bags = 5, kmax = 15, seed = 1):
 
     return k_opt, mean_acc 
 
-
-#implement confu_mat calculation, accur, F1 also!    
 def getAccuracy(labels, pred_labels, method = "class"):
     """
     Calc Acc given labels and pred_labels
+    when method = "class"  - it returns # of correctly predicted labels, normalized to 1 
+    when method = "reg"    - it returns 1 - sum((y-y_hat)^2) / sum((y-y_mean)^2)
     ---------------
     
     input:   labels       - actual known labels(values in case of regression)
@@ -100,29 +100,29 @@ def getAccuracy(labels, pred_labels, method = "class"):
     """
 
     n = len(labels)
-    #-------- check, debug
+    #-------- check point
     if n != len(pred_labels):
         print("Two vectors must have equal size!")
       
     
     correct = 0.0
-    norm = 0
     if method == "class":  #just count correct cases 
         for i in range(n):
             if labels[i] == pred_labels[i]:
                 correct += 1
         correct = correct/float(n) 
         
-    elif method == "reg": #return root mean squared error
+    if method == "reg": #return root mean squared error
         ave = np.mean(labels)
+        norm = 0.0
+        correct = 0.0
         for i in range(n):
             correct = correct + (labels[i] - pred_labels[i])*(labels[i] - pred_labels[i])
             norm = norm + (labels[i] - ave)*(labels[i] - ave)
             
-        correct = np.sqrt(correct)    
-        norm = np.sqrt(norm)
-    accuracy = 1.0 - correct / norm    
-    return accuracy
+        acc = 1.0 - np.sqrt(correct / norm)    
+        correct = acc
+    return correct
 
 
 def testing(train, test, labels, method = "class", k_opt = 1):
