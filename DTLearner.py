@@ -41,11 +41,10 @@ class DTLearner(object):
         if len(np.unique(dataY)) == 1:
             return np.array([-1, dataY[0], np.nan, np.nan])
         ######################################################################
-
             
         remain_feats_for_split = list(range(num_feats))
 
-        # calculate coor(X_i,Y)
+        #calculate coor(X_i,Y)
         corrs = []
         for i in range(num_feats):
             abs_corr = abs(np.corrcoef(dataX[:,i], dataY)[0,1])
