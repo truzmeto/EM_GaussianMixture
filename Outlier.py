@@ -30,8 +30,7 @@ def outlier_mod_Zscore(X, thresh = 3.5):
     deviations from median by absolute deviations from median....
     --------------------------
 
-    Input:   X    - normalized((x-x_mean)/x_std) numpy
-                       ndarray of dim.(n_samps, n_feats)
+    Input:   X       - numpy ndarray of dim.(n_samps, n_feats)
              thresh  - threshhold value for detecting outliers
 
     Output:  out     - numpy ndarray of dim (n_samps, n_feats)
