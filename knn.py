@@ -9,8 +9,10 @@ from scipy.spatial.distance import cdist
 def knn_main(train, test, labels, method = "class", k = 1):
     
     '''
-    Main part of knn, where we predicte labels for a given data point based on 
-    overrepresented class among its closest k neighbours.
+    This function, in case of classification, predicts labels for a given data
+    point based on overrepresented class among its closest k neighbours.
+    Wheares, for regression, predicted value for a data point is an average
+    value taken among k-neighbours.
     -----------
     
     Input:   train  - numpy ndarray of dimension (n_train_samples, n_features)
@@ -127,7 +129,7 @@ def getAccuracy(labels, pred_labels, method = "class"):
 
 def testing(train, test, labels, method = "class", k_opt = 1):
     """
-    Performs knn on testing set given opt k value.   
+    Performs knn on testing set given optimum k value.   
     
     -----------
     
