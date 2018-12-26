@@ -81,7 +81,7 @@ def initilize_weights(n_features):
     return theta      
 
 
-def train(X, y, num_iters=2000, lr=0.1):
+def train(X, y, num_iters=2000, lr=0.02):
     """
     This function finds optimal values for theta by performing gradient descent.
      ---------------
@@ -95,6 +95,7 @@ def train(X, y, num_iters=2000, lr=0.1):
     """
     #weights initialization
     n_features = X.shape[1]
+    n_samples = X.shape[0]
     theta = initilize_weights(n_features)
 
     for i in range(num_iters):
@@ -102,7 +103,7 @@ def train(X, y, num_iters=2000, lr=0.1):
         h = sigmoid(z)
         
         #calculate gradient
-        gradient = np.dot(X.T, (h - y)) / y.size
+        gradient = np.dot(X.T, (h - y)) / n_samples
         #update weights
         theta -= lr * gradient
     
