@@ -109,6 +109,40 @@ def train(X, y, num_iters=2000, lr=0.02):
     
     return theta       
 
+def train_sgd(X, y, num_iters=2000, lr=0.02):
+    """
+    This function finds optimal values for theta by performing
+    stochastic gradient descent, where instead of updating all
+    weight we randomly choose one and update it.
+     ---------------
+    
+    input:   X          - input data, np.ndraay of dim(n_samples, n_features) 
+             y          - actual known labels of input data
+             num_iters  - number of iterations for grad descent calculation    
+             lr         - learning rate
+             
+    output:  theta      - optimal theta values calculated, np.ndarray of size (n_features)  
+    """
+    #weights initialization
+    n_features = X.shape[1]
+    n_samples = X.shape[0]
+    theta = initilize_weights(n_features)
+    
+    for i in range(num_iters):
+        z = np.dot(X, theta)
+        h = sigmoid(z)
+        
+        #calculate gradient, ############### this might need improvement
+        gradient = np.dot(X.T, (h - y)) / n_samples
+        
+        #rendomly select target weight
+        sel_id = np.random.randint(0,n_features)
+        
+        #update selected theta
+        theta[sel_id] -= lr * gradient[sel_id]
+    
+    return theta       
+
 
 def test(X,theta):
     """
