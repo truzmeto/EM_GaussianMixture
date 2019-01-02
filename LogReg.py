@@ -109,40 +109,55 @@ def train(X, y, num_iters=2000, lr=0.02):
     
     return theta       
 
-def train_sgd(X, y, num_iters=2000, lr=0.02):
+
+#def train_sgd(X, y, num_iters=2000, lr=0.02):
+#    """
+#    This function finds optimal values for theta by performing
+#    stochastic gradient descent, where instead of updating all
+#    weight we randomly choose one and update it.
+#     ---------------
+#    """
+        #rendomly select target weight
+#       sel_id = np.random.randint(0,n_features)
+        #update selected theta
+#       theta[sel_id] -= lr * gradient[sel_id]
+#    return theta
+
+
+def train_sgd(X, y, batch_frac = 0.1 , num_iters=1000, lr=0.02):
     """
-    This function finds optimal values for theta by performing
-    stochastic gradient descent, where instead of updating all
-    weight we randomly choose one and update it.
-     ---------------
+    This function finds optimal values for theta by performing stochastic gradient descent.
+    It updates wights using random subset of data(mini batch) for each iteration(epoch).
+    ----------------
     
     input:   X          - input data, np.ndraay of dim(n_samples, n_features) 
              y          - actual known labels of input data
-             num_iters  - number of iterations for grad descent calculation    
+             num_iters  - number of iterations(epochs) for grad descent calculation    
              lr         - learning rate
-             
+             batch_frac - fraction of data to determine mini batch size
+
     output:  theta      - optimal theta values calculated, np.ndarray of size (n_features)  
     """
     #weights initialization
     n_features = X.shape[1]
     n_samples = X.shape[0]
     theta = initilize_weights(n_features)
+    batch_size = int(n_samples * batch_frac)
     
     for i in range(num_iters):
-        z = np.dot(X, theta)
+           
+        resample_index = np.random.choice(n_samples, batch_size, replace = False)
+        batchX = X[resample_index]   # data[resample_index,:]          
+        batchY = y[resample_index]
+
+        z = np.dot(batchX, theta)
         h = sigmoid(z)
         
-        #calculate gradient, ############### this might need improvement
-        gradient = np.dot(X.T, (h - y)) / n_samples
-        
-        #rendomly select target weight
-        sel_id = np.random.randint(0,n_features)
-        
-        #update selected theta
-        theta[sel_id] -= lr * gradient[sel_id]
+        #calculate gradient
+        gradient = np.dot(batchX.T, (h - batchY)) / batch_size
+        #update weights
     
     return theta       
-
 
 def test(X,theta):
     """
