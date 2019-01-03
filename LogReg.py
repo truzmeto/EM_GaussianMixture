@@ -20,9 +20,12 @@ def sigmoid(z):
     """ Sigmoid function"""
     return 1 / (1 + np.exp(-z))
 
-#def cost(h, y):
-#    """ Cost function"""   
-#    return (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()    
+def cost(h, y):
+    """
+    Cost function or Log Loss function is subject
+    to minimization to find optimal weights
+    """   
+    return (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()    
 
 
 def getAccuracy(labels, pred_labels, method = "class"):
@@ -81,7 +84,7 @@ def initilize_weights(n_features):
     return theta      
 
 
-def train(X, y, num_iters=2000, lr=0.02):
+def train(X, y, num_iters=2000, lr=0.02, Lambda = 0.1):
     """
     This function finds optimal values for theta by performing gradient descent.
      ---------------
@@ -90,6 +93,7 @@ def train(X, y, num_iters=2000, lr=0.02):
              y          - actual known labels of input data
              num_iters  - number of iterations for grad descent calculation    
              lr         - learning rate
+             Lambda     - regularization parameter(Ridge  - l2 penalty)
              
     output:  theta      - optimal theta values calculated, np.ndarray of size (n_features)  
     """
@@ -103,11 +107,12 @@ def train(X, y, num_iters=2000, lr=0.02):
         h = sigmoid(z)
         
         #calculate gradient
-        gradient = np.dot(X.T, (h - y)) / n_samples
+        gradient = np.dot(X.T, (h - y)) / n_samples  + Lambda*theta / n_samples
         #update weights
         theta -= lr * gradient
-    
+
     return theta       
+
 
 
 #def train_sgd(X, y, num_iters=2000, lr=0.02):
@@ -124,7 +129,7 @@ def train(X, y, num_iters=2000, lr=0.02):
 #    return theta
 
 
-def train_sgd(X, y, batch_frac = 0.1 , num_iters=1000, lr=0.02):
+def train_sgd(X, y, batch_frac = 0.2 , num_iters=1000, lr=0.02, Lambda = 0.1):
     """
     This function finds optimal values for theta by performing stochastic gradient descent.
     It updates wights using random subset of data(mini batch) for each iteration(epoch).
@@ -135,6 +140,7 @@ def train_sgd(X, y, batch_frac = 0.1 , num_iters=1000, lr=0.02):
              num_iters  - number of iterations(epochs) for grad descent calculation    
              lr         - learning rate
              batch_frac - fraction of data to determine mini batch size
+             Lambda     - regularization parameter(Ridge  - l2 penalty)
 
     output:  theta      - optimal theta values calculated, np.ndarray of size (n_features)  
     """
@@ -154,10 +160,12 @@ def train_sgd(X, y, batch_frac = 0.1 , num_iters=1000, lr=0.02):
         h = sigmoid(z)
         
         #calculate gradient
-        gradient = np.dot(batchX.T, (h - batchY)) / batch_size
+        gradient = np.dot(batchX.T, (h - batchY)) / batch_size + Lambda*theta / batch_size
         #update weights
     
     return theta       
+
+
 
 def test(X,theta):
     """
