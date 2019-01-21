@@ -1,8 +1,8 @@
 ## My ML & DS toolbox
 
-### This repository contains some of ML algorithms implemented with powerful numpy library under Python3.
+### This repository contains some of ML algorithms implemented from scratch with powerful numpy library under Python3.
 
-Currently it only has:
+Available ML models include:
 
 1. Expectation Maximization with Gaussian Mixture that performs clustering on data set with unknown labels.
    It only supports diagonal covariance meaniang std length is same along different feature directions. 
@@ -17,4 +17,6 @@ Currently it only has:
 5. Random Forest ( Random Tree combined with Bagging)
 
 6. Linear Regression
+
+7. Logistic Regression Classifier (linear case) with GD and SGD
 
