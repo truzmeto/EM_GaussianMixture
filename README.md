@@ -20,3 +20,4 @@ Available ML models include:
 
 7. Logistic Regression Classifier (linear case) with GD and SGD
 
+8. Kmeans Clustering
